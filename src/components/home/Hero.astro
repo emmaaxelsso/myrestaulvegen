@@ -1,19 +1,104 @@
-<section class="hero">
-  <p>Vårt hus i Norge</p>
-  <h1>Välkommen till Myrestaulvegen 83</h1>
-  <p>Här hittar du allt inför din vistelse hos oss.</p>
+---
+import { Image } from 'astro:assets';
+import gaustaImage from '../../assets/images/gausta-hero.jpg';
+---
+
+<section class="hero" aria-labelledby="welcome-title">
+  <Image
+    src={gaustaImage}
+    alt="Kvällsljus över Gaustatoppen"
+    class="hero-image"
+    loading="eager"
+    fetchpriority="high"
+    widths={[640, 1024, 1600, 2400]}
+    sizes="100vw"
+  />
+
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="hero-content container">
+    <p class="hero-location">Myrestaulvegen 83 · Gausta, Norge</p>
+
+    <h1 id="welcome-title">
+      Vad kul att ni<br />
+      ska komma hit.
+    </h1>
+
+    <p class="hero-description">
+      Fjälluft, skidor, och mycket mer. Här hittar ni allt ni behöver veta inför en vistelse på Myrestaulvegen 83, om ni inte vill ha någon mänsklig kontakt. 
+    </p>
+  </div>
 </section>
 
 <style>
   .hero {
-    padding: 80px 24px;
-    max-width: 1000px;
-    margin: 0 auto;
-    font-family: sans-serif;
-    color: #253b32;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-height: 36rem;
+    overflow: hidden;
+    background: var(--color-charcoal);
+    color: var(--color-snow);
+  }
+
+  .hero-image {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 65%;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      90deg,
+      rgb(20 27 29 / 85%),
+      rgb(20 27 29 / 55%) 65%,
+      rgb(20 27 29 / 25%)
+    );
+  }
+
+  .hero-content {
+    padding-block: 5rem;
+  }
+
+  .hero-location {
+    margin: 0 0 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
   }
 
   h1 {
-    font-size: clamp(2rem, 5vw, 4rem);
+    margin: 0;
+    font-size: clamp(2.75rem, 6vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.08;
+  }
+
+  .hero-description {
+    max-width: 29rem;
+    margin: 1.75rem 0 0;
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 40rem) {
+    .hero {
+      min-height: 30rem;
+    }
+
+    .hero-content {
+      padding-block: 3.5rem;
+    }
+
+    .hero-overlay {
+      background: rgb(20 27 29 / 65%);
+    }
   }
 </style>

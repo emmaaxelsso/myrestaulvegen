@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { packingList } from '../data/packing-list.js';
+---
+
+<Layout title="Inför resan | Myrestaulvegen 83">
+  <div class="travel-page container">
+    <header class="page-heading">
+      <p class="eyebrow">Inför resan</p>
+      <h1>Snart ses vi i fjällen.</h1>
+      <p class="introduction">
+        Lite hjälp med resan och packningen, så att det blir enkelt
+        att komma iväg.
+      </p>
+    </header>
+
+    <section class="travel-section" aria-labelledby="directions-title">
+      <h2 id="directions-title">Hitta hit</h2>
+      <p>
+        Här kommer kartlänk, vägbeskrivning och information om
+        parkering vid huset.
+      </p>
+
+      <aside class="notice">
+        <h3>På väg hit under vintern?</h3>
+        <p>
+          Planera för vinterväglag och kontrollera väder och
+          vägförhållanden före avresa.
+        </p>
+      </aside>
+    </section>
+
+    <section class="travel-section" aria-labelledby="packing-title">
+      <h2 id="packing-title">Packa med er</h2>
+      <p class="section-intro">
+        En liten hjälp på vägen. Anpassa packningen efter årstid
+        och vad ni vill hitta på.
+      </p>
+
+      <div class="packing-grid">
+        {packingList.map(({ title, items }) => (
+          <article class="packing-card">
+            <h3>{title}</h3>
+
+            <ul>
+              {items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+
+      <p class="house-link">
+        Undrar ni vad som redan finns?
+        <a href="/huset/">Läs om utrustningen i huset.</a>
+      </p>
+    </section>
+
+    <section class="travel-section" aria-labelledby="before-title">
+      <h2 id="before-title">Bra att veta innan ni åker</h2>
+      <p>
+        Här fyller vi på med information om exempelvis matinköp,
+        sängkläder och handdukar.
+      </p>
+    </section>
+
+    <section class="travel-section" aria-labelledby="arrival-title">
+      <h2 id="arrival-title">När ni kommer fram</h2>
+      <p>
+        Här kommer en kort guide till de första sakerna att göra
+        när ni anländer.
+      </p>
+      <p class="placeholder">
+        Information om nycklar och tillträde lägger vi till när
+        hemsidans lösenordsskydd är på plats.
+      </p>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .travel-page {
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+
+  .page-heading {
+    max-width: 42rem;
+    margin-bottom: 4rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400;
+  }
+
+  .introduction {
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+  }
+
+  .travel-section + .travel-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  h2 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 400;
+  }
+
+  h3 {
+    margin: 0 0 1rem;
+    font-size: 1.4rem;
+    font-weight: 400;
+  }
+
+  .travel-section > p {
+    max-width: 42rem;
+    color: var(--color-text-muted);
+  }
+
+  .notice {
+    max-width: 42rem;
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-primary);
+    background: var(--color-stone);
+  }
+
+  .notice p {
+    margin: 0;
+  }
+
+  .section-intro {
+    margin-bottom: 2rem;
+  }
+
+  .packing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .packing-card {
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  li {
+    padding-left: 0.25rem;
+  }
+
+  li + li {
+    margin-top: 0.75rem;
+  }
+
+  li::marker {
+    color: var(--color-primary);
+  }
+
+  .house-link {
+    margin-top: 1.5rem;
+  }
+
+  .placeholder {
+    font-style: italic;
+  }
+
+  @media (max-width: 55rem) {
+    .packing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

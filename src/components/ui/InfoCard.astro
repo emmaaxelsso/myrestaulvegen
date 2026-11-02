@@ -1,0 +1,52 @@
+---
+const { title, description, href, linkLabel = 'Läs mer' } = Astro.props;
+---
+
+<a class="info-card" href={href}>
+  <h3>{title}</h3>
+  <p>{description}</p>
+
+  <span class="card-link">
+    {linkLabel}
+    <span aria-hidden="true">↗</span>
+  </span>
+</a>
+
+<style>
+  .info-card {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .info-card:hover {
+    border-color: var(--color-primary);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 400;
+  }
+
+  p {
+    margin: 1rem 0 2rem;
+    color: var(--color-text-muted);
+  }
+
+  .card-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+</style>

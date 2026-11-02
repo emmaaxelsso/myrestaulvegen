@@ -1,0 +1,89 @@
+---
+import InfoCard from '../ui/InfoCard.astro';
+
+const guides = [
+  {
+    title: 'Inför resan',
+    description:
+      'Hitta hit, packa lagom och få koll på det som är bra att veta innan ni åker.',
+    href: '/infor-resan/',
+    linkLabel: 'Planera resan',
+  },
+  {
+    title: 'Huset',
+    description:
+      'Wifi, vad som finns och hur saker fungerar. Allt för att känna er som hemma.',
+    href: '/huset/',
+    linkLabel: 'Lär känna huset',
+  },
+  {
+    title: 'Upptäck Gausta',
+    description:
+      'Skidåkning, vandring och våra tips på saker att göra i närheten.',
+    href: '/gausta/',
+    linkLabel: 'Utforska området',
+  },
+];
+---
+
+<section class="guest-guide container" aria-labelledby="guide-title">
+  <div class="guide-heading">
+    <p class="eyebrow">Lite hjälp på vägen</p>
+    <h2 id="guide-title">Allt för er vistelse.</h2>
+    <p class="introduction">
+      Från packlistan hemma till första koppen kaffe här.
+    </p>
+  </div>
+
+  <div class="guide-grid">
+    {guides.map((guide) => (
+      <InfoCard
+        title={guide.title}
+        description={guide.description}
+        href={guide.href}
+        linkLabel={guide.linkLabel}
+      />
+    ))}
+  </div>
+</section>
+
+<style>
+  .guest-guide {
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+
+  .guide-heading {
+    margin-bottom: 2rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+  }
+
+  .introduction {
+    margin: 1rem 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 50rem) {
+    .guide-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

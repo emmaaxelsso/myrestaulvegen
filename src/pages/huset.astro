@@ -1,10 +1,169 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const quickInfo = [
+  {
+    title: 'Wifi',
+    details: [
+      { label: 'Nätverk', value: '[Nätverksnamn kommer]' },
+      { label: 'Lösenord', value: '[Visas när sidan är skyddad]' },
+    ],
+  },
+  {
+    title: 'Kontakt',
+    details: [
+      { label: 'Kontaktperson', value: '[Namn kommer]' },
+      { label: 'Telefon', value: '[Telefonnummer kommer]' },
+    ],
+  },
+];
 ---
 
 <Layout title="Huset | Myrestaulvegen 83">
-  <section class="container">
-    <h1>Huset</h1>
-    <p>Här kommer information om huset.</p>
-  </section>
+  <div class="house-page container">
+    <header class="page-heading">
+      <p class="eyebrow">Huset</p>
+      <h1>Känn er som hemma.</h1>
+      <p class="introduction">
+        Här samlar vi det praktiska, så att ni kan lägga mer tid på
+        att njuta av vistelsen.
+      </p>
+    </header>
+
+    <section aria-labelledby="quick-info-title">
+      <h2 id="quick-info-title">Bra att ha nära till hands</h2>
+
+      <div class="quick-info">
+        {quickInfo.map(({ title, details }) => (
+          <article class="info-panel">
+            <h3>{title}</h3>
+
+            <dl>
+              {details.map(({ label, value }) => (
+                <div class="detail">
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="house-section" aria-labelledby="equipment-title">
+      <h2 id="equipment-title">Det här finns i huset</h2>
+      <p>
+        Här fyller vi på med köksutrustning, sängkläder, handdukar,
+        spel och annat som kan vara bra att veta om.
+      </p>
+    </section>
+
+    <section class="house-section" aria-labelledby="instructions-title">
+      <h2 id="instructions-title">Så fungerar det</h2>
+      <p>
+        Här kommer enkla instruktioner för värme, eldstad,
+        apparater och sophantering.
+      </p>
+    </section>
+
+    <section class="house-section" aria-labelledby="departure-title">
+      <h2 id="departure-title">Innan ni åker hem</h2>
+      <p>
+        Här kommer en liten checklista att gå igenom före avresa.
+      </p>
+    </section>
+  </div>
 </Layout>
+
+<style>
+  .house-page {
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+
+  .page-heading {
+    max-width: 42rem;
+    margin-bottom: 4rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400;
+  }
+
+  .introduction {
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+  }
+
+  h2 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 400;
+  }
+
+  .quick-info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .info-panel {
+    padding: 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  h3 {
+    margin: 0 0 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  dl {
+    margin: 0;
+  }
+
+  .detail + .detail {
+    margin-top: 1.25rem;
+  }
+
+  dt {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  dd {
+    margin: 0.25rem 0 0;
+    overflow-wrap: anywhere;
+  }
+
+  .house-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .house-section p {
+    max-width: 42rem;
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 40rem) {
+    .quick-info {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

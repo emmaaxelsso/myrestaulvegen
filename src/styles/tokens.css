@@ -1,0 +1,25 @@
+:root {
+  /* Naturens färger */
+  --color-snow: #f4f2ed;
+  --color-stone: #e3ded5;
+  --color-charcoal: #292e2d;
+  --color-moss: #53614c;
+  --color-frost: #a8bdc9;
+  --color-copper: #a96549;
+  --color-peach: #e8b49c;
+
+  /* Färgernas roller på hemsidan */
+  --color-background: var(--color-snow);
+  --color-surface: #fffdf9;
+  --color-text: var(--color-charcoal);
+  --color-text-muted: #60665f;
+  --color-primary: var(--color-moss);
+  --color-on-primary: #ffffff;
+  --color-border: #d2d3ca;
+
+  --font-heading: Georgia, serif;
+  --font-body: Arial, sans-serif;
+
+  --content-width: 72rem;
+  --radius-card: 0.75rem;
+}

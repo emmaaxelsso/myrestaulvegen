@@ -1,0 +1,76 @@
+---
+import { navigation } from '../../data/navigation.js';
+
+const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
+---
+
+<header>
+  <div class="container header-inner">
+    <a class="brand" href="/">Myrestaulvegen 83</a>
+
+    <nav aria-label="Huvudmeny">
+      <ul>
+        {navigation.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={
+                currentPath === (href.replace(/\/+$/, '') || '/')
+                  ? 'page'
+                  : undefined
+              }
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-block: 1.5rem;
+  }
+
+  .brand {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  nav a {
+    display: block;
+    padding-block: 0.75rem;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  nav a:hover,
+  nav a[aria-current="page"] {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+  }
+</style>

@@ -4,41 +4,41 @@ import gaustaImage from '../../assets/images/gausta-hero.jpg';
 ---
 
 <section class="party-hero" aria-labelledby="party-title">
-    <Image
-      src={gaustaImage}
-      alt="Gaustatoppen i kvällsljus"
-      class="party-image"
-      widths={[640, 1024, 1600, 2400]}
-      sizes="100vw"
-      loading="eager"
-      fetchpriority="high"
-    />
+  <Image
+    src={gaustaImage}
+    alt="Utsikt över Gaustatoppen"
+    class="party-image"
+    widths={[640, 1024, 1600, 2400]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
 
-    <div class="container hero-copy">
-      <p class="eyebrow">Gausta, Norge · 4–7 februari 2027</p>
+  <div class="container hero-copy">
+    <p class="eyebrow">Willi fyller 28</p>
 
-      <h1 id="party-title">
-        GAUSTA<br />
-        GATE <em>2027</em>
-      </h1>
+    <h1 id="party-title">
+      Gausta Gate <span>2027</span>
+    </h1>
 
-      <p class="birthday">
-        Willi fyller 28. Vi tar det till fjällen.
-      </p>
+    <p class="hero-description">
+      En långhelg med vänner, fjälluft och födelsedagsfirande.
+      Här hittar ni helgens planer och allt inför resan.
+    </p>
 
-      <p class="intro">
-        Ett hus, ett gäng kompisar och en långhelg att fira
-        tillsammans. Varmt välkomna till födelsedagshelgen i Gausta!
-      </p>
+    <ul class="hero-details" aria-label="Datum och plats">
+      <li>4–7 februari 2027</li>
+      <li>Myrestaulvegen 83 · Gausta</li>
+    </ul>
 
+    <div class="hero-actions">
       <a class="button" href="#helgen">
-        Se helgens schema
-        <span aria-hidden="true">↓</span>
+        Se helgens schema <span aria-hidden="true">↓</span>
+      </a>
+
+      <a class="hero-secondary" href="#praktiskt">
+        Inför helgen
       </a>
     </div>
-
-    <span class="stamp" aria-hidden="true">
-      28
-      <small>år att fira</small>
-    </span>
-  </section>
+  </div>
+</section>

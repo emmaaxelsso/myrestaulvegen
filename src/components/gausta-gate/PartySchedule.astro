@@ -1,50 +1,76 @@
 ---
 import { days } from '../../data/gausta-gate.js';
+
+// Behåll aktiviteter som har innehåll.
+// Generiska platshållare samlas i en kort notis.
+const placeholderTitles = new Set([
+  'Kvällens planer',
+  'Fredagens program',
+  'Lördagens program',
+]);
+
+const scheduleDays = days.map((day) => {
+  const events = day.events.filter((event) => {
+    const isPlaceholder =
+      event.time.trim().toLowerCase() === 'tid kommer' &&
+      placeholderTitles.has(event.title.trim());
+
+    return !isPlaceholder;
+  });
+
+  return {
+    ...day,
+    events,
+    hasPendingPlans: events.length < day.events.length,
+  };
+});
 ---
 
 <section
-    class="container section"
-    id="helgen"
-    aria-labelledby="weekend-title"
-  >
-    <p class="eyebrow">Fyra dagar i gott sällskap</p>
-
-    <div class="section-heading">
-      <h2 id="weekend-title">Vad händer när?</h2>
-
-      <p>
-        Välj en dag för att se schemat. Vi fyller på med fler
-        detaljer när planerna är klara.
-      </p>
+  class="container section party-schedule-section"
+  id="helgen"
+  aria-labelledby="weekend-title"
+>
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Torsdag till söndag</p>
+      <h2 id="weekend-title">Helgens schema</h2>
     </div>
 
-    <div class="schedule" data-day-schedule>
-      <div
-        class="day-tabs"
-        role="tablist"
-        aria-label="Välj dag"
-        hidden
-      >
-        {
-          days.map(({ id, day, date }, index) => (
-            <button
-              type="button"
-              class="day-tab"
-              id={`tab-${id}`}
-              role="tab"
-              aria-selected={index === 0 ? 'true' : 'false'}
-              aria-controls={`panel-${id}`}
-              tabindex={index === 0 ? 0 : -1}
-            >
-              <span>{day}</span>
-              <small>{date}</small>
-            </button>
-          ))
-        }
-      </div>
+    <p>
+      Välj en dag för att se planerna.
+      Fler detaljer fylls på när det närmar sig.
+    </p>
+  </div>
 
+  <div class="schedule" data-day-schedule>
+    <div
+      class="day-tabs"
+      role="tablist"
+      aria-label="Välj dag i schemat"
+      hidden
+    >
       {
-        days.map(({ id, day, date, title, events }) => (
+        scheduleDays.map(({ id, day, date }, index) => (
+          <button
+            type="button"
+            class="day-tab"
+            id={`tab-${id}`}
+            role="tab"
+            aria-selected={index === 0 ? 'true' : 'false'}
+            aria-controls={`panel-${id}`}
+            tabindex={index === 0 ? 0 : -1}
+          >
+            <span>{day}</span>
+            <small>{date}</small>
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      scheduleDays.map(
+        ({ id, day, date, title, events, hasPendingPlans }) => (
           <section
             class="day-panel"
             id={`panel-${id}`}
@@ -54,28 +80,40 @@ import { days } from '../../data/gausta-gate.js';
               <p class="eyebrow">
                 {day} · {date}
               </p>
+
               <h3 id={`heading-${id}`}>{title}</h3>
             </div>
 
-            <ol class="schedule-list">
-              {events.map(({ time, title, description }) => (
-                <li class="schedule-event">
-                  <span class="event-time">{time}</span>
+            {events.length > 0 && (
+              <ol class="schedule-list">
+                {events.map(({ time, title, description }) => (
+                  <li class="schedule-event">
+                    <span class="event-time">{time}</span>
 
-                  <div class="event-content">
-                    <h4>{title}</h4>
-                    <p>{description}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+                    <div class="event-content">
+                      <h4>{title}</h4>
+                      <p>{description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            )}
+
+            {(hasPendingPlans || events.length === 0) && (
+              <p class="schedule-note">
+                {events.length === 0
+                  ? 'Dagens program är inte spikat ännu. Aktiviteter och tider kommer här.'
+                  : 'Fler planer för dagen kommer när det närmar sig.'}
+              </p>
+            )}
           </section>
-        ))
-      }
-    </div>
-  </section>
+        )
+      )
+    }
+  </div>
+</section>
 
-  <script>
+<script>
   function setupDaySchedules() {
     document.querySelectorAll('[data-day-schedule]').forEach((schedule) => {
       if (!(schedule instanceof HTMLElement)) return;
@@ -124,15 +162,19 @@ import { days } from '../../data/gausta-gate.js';
             case 'ArrowRight':
               nextIndex = (index + 1) % tabs.length;
               break;
+
             case 'ArrowLeft':
               nextIndex = (index - 1 + tabs.length) % tabs.length;
               break;
+
             case 'Home':
               nextIndex = 0;
               break;
+
             case 'End':
               nextIndex = tabs.length - 1;
               break;
+
             default:
               return;
           }
@@ -149,5 +191,6 @@ import { days } from '../../data/gausta-gate.js';
   }
 
   setupDaySchedules();
+
   document.addEventListener('astro:page-load', setupDaySchedules);
 </script>

@@ -1,3 +1,27 @@
+/**
+ * @typedef {Object} ActivityLink
+ * @property {string} href
+ * @property {string} label
+ */
+
+/**
+ * @typedef {Object} Activity
+ * @property {string} id
+ * @property {string} title
+ * @property {string} description
+ * @property {ActivityLink | null} link
+ */
+
+/**
+ * @typedef {Object} ActivityCategory
+ * @property {string} id
+ * @property {string} title
+ * @property {string} description
+ * @property {Activity[]} activities
+ */
+
+/** @type {ActivityCategory[]} */
+
 export const activityCategories = [
   {
     id: 'vinter',

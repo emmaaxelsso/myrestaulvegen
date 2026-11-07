@@ -12,16 +12,30 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
       <ul>
         {navigation.map(({ label, href }) => (
           <li>
-            <a
-              href={href}
-              aria-current={
-                currentPath === (href.replace(/\/+$/, '') || '/')
-                  ? 'page'
-                  : undefined
-              }
-            >
-              {label}
-            </a>
+              <a
+                href={href}
+                class:list={{ 'party-nav-link': href === '/gausta-gate/' }}
+                aria-current={
+                  currentPath === (href.replace(/\/+$/, '') || '/')
+                    ? 'page'
+                    : undefined
+                }
+              >
+                {label}
+
+                {href === '/gausta-gate/' && (
+                  <span class="party-sparkles" aria-hidden="true">
+                  <span>✦</span>
+                  <span>✧</span>
+                  <span>✦</span>
+                  <span>✧</span>
+                  <span>✦</span>
+                  <span>✧</span>
+                  <span>✦</span>
+                  <span>✧</span>
+                  </span>
+                )}
+              </a>
           </li>
         ))}
       </ul>
@@ -73,4 +87,121 @@ const currentPath = Astro.url.pathname.replace(/\/+$/, '') || '/';
     color: var(--color-primary);
     border-bottom-color: var(--color-primary);
   }
+
+.party-nav-link {
+  position: relative;
+}
+
+.party-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.party-sparkles span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #d4a017;
+  font-size: 2rem;
+  line-height: 1;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.party-sparkles span:nth-child(1) {
+  --x: -90px;
+  --y: -22px;
+  --delay: 0ms;
+}
+
+.party-sparkles span:nth-child(2) {
+  --x: -55px;
+  --y: -36px;
+  --delay: 50ms;
+  color: #836326;
+}
+
+.party-sparkles span:nth-child(3) {
+  --x: -10px;
+  --y: -42px;
+  --delay: 100ms;
+}
+
+.party-sparkles span:nth-child(4) {
+  --x: 48px;
+  --y: -35px;
+  --delay: 30ms;
+  color: #836326;
+}
+
+.party-sparkles span:nth-child(5) {
+  --x: 95px;
+  --y: -15px;
+  --delay: 80ms;
+}
+
+.party-sparkles span:nth-child(6) {
+  --x: 80px;
+  --y: 25px;
+  --delay: 130ms;
+  color: #836326;
+}
+
+.party-sparkles span:nth-child(7) {
+  --x: 15px;
+  --y: 35px;
+  --delay: 60ms;
+}
+
+.party-sparkles span:nth-child(8) {
+  --x: -75px;
+  --y: 28px;
+  --delay: 110ms;
+  color: #836326;
+}
+
+.party-nav-link:is(:hover, :focus-visible) .party-sparkles span {
+  animation: party-firework 1.2s ease-out var(--delay) infinite;
+}
+
+@keyframes party-firework {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2) rotate(0deg);
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  65% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(0.4)
+      rotate(140deg);
+  }
+}
+
+/* Visa stilla stjärnor om besökaren har valt minskad rörelse. */
+@media (prefers-reduced-motion: reduce) {
+  .party-nav-link:is(:hover, :focus-visible) .party-sparkles span {
+    animation: none;
+    opacity: 1;
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(0.8);
+  }
+}
 </style>

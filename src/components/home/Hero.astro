@@ -25,8 +25,15 @@ import gaustaImage from '../../assets/images/gausta-hero.jpg';
     </h1>
 
     <p class="hero-description">
-      Fjälluft, skidor, och mycket mer. Här hittar ni allt ni behöver veta inför en vistelse på Myrestaulvegen 83, om ni inte vill ha någon mänsklig kontakt. 
+      Fjälluft, skidor, och mycket mer. 
+      Här hittar ni allt ni behöver veta inför en vistelse på Myrestaulvegen 83, 
+      om ni vill undvika all mänsklig kontakt. 
     </p>
+
+    <a class="party-link" href="/gausta-gate/">
+      Gausta Gate 2027 · 4–7 februari
+      <span aria-hidden="true">↗</span>
+    </a>
   </div>
 </section>
 
@@ -87,6 +94,30 @@ import gaustaImage from '../../assets/images/gausta-hero.jpg';
     margin: 1.75rem 0 0;
     font-size: 1.1rem;
   }
+
+.party-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1rem 1.4rem;
+  background: #b99a59;
+  color: #18283d;
+  border: 2px solid transparent;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 160ms ease;
+}
+
+.party-link:hover {
+  background: #c7aa70;
+}
+
+.party-link:focus-visible {
+  outline: 3px solid #fff8ed;
+  outline-offset: 4px;
+}
 
   @media (max-width: 40rem) {
     .hero {

@@ -1,0 +1,153 @@
+---
+import { days } from '../../data/gausta-gate.js';
+---
+
+<section
+    class="container section"
+    id="helgen"
+    aria-labelledby="weekend-title"
+  >
+    <p class="eyebrow">Fyra dagar i gott sällskap</p>
+
+    <div class="section-heading">
+      <h2 id="weekend-title">Vad händer när?</h2>
+
+      <p>
+        Välj en dag för att se schemat. Vi fyller på med fler
+        detaljer när planerna är klara.
+      </p>
+    </div>
+
+    <div class="schedule" data-day-schedule>
+      <div
+        class="day-tabs"
+        role="tablist"
+        aria-label="Välj dag"
+        hidden
+      >
+        {
+          days.map(({ id, day, date }, index) => (
+            <button
+              type="button"
+              class="day-tab"
+              id={`tab-${id}`}
+              role="tab"
+              aria-selected={index === 0 ? 'true' : 'false'}
+              aria-controls={`panel-${id}`}
+              tabindex={index === 0 ? 0 : -1}
+            >
+              <span>{day}</span>
+              <small>{date}</small>
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        days.map(({ id, day, date, title, events }) => (
+          <section
+            class="day-panel"
+            id={`panel-${id}`}
+            aria-labelledby={`heading-${id}`}
+          >
+            <div class="day-panel-heading">
+              <p class="eyebrow">
+                {day} · {date}
+              </p>
+              <h3 id={`heading-${id}`}>{title}</h3>
+            </div>
+
+            <ol class="schedule-list">
+              {events.map(({ time, title, description }) => (
+                <li class="schedule-event">
+                  <span class="event-time">{time}</span>
+
+                  <div class="event-content">
+                    <h4>{title}</h4>
+                    <p>{description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+
+  <script>
+  function setupDaySchedules() {
+    document.querySelectorAll('[data-day-schedule]').forEach((schedule) => {
+      if (!(schedule instanceof HTMLElement)) return;
+      if (schedule.dataset.ready === 'true') return;
+
+      const tabList = schedule.querySelector('.day-tabs');
+
+      const tabs = Array.from(
+        schedule.querySelectorAll<HTMLButtonElement>('[role="tab"]')
+      );
+
+      const panels = Array.from(
+        schedule.querySelectorAll<HTMLElement>('.day-panel')
+      );
+
+      if (!(tabList instanceof HTMLElement)) return;
+      if (!tabs.length || tabs.length !== panels.length) return;
+
+      function selectDay(index: number, moveFocus = false) {
+        tabs.forEach((tab, tabIndex) => {
+          const selected = tabIndex === index;
+
+          tab.setAttribute('aria-selected', String(selected));
+          tab.tabIndex = selected ? 0 : -1;
+          panels[tabIndex].hidden = !selected;
+        });
+
+        if (moveFocus) {
+          tabs[index].focus();
+        }
+      }
+
+      tabs.forEach((tab, index) => {
+        panels[index].setAttribute('role', 'tabpanel');
+        panels[index].setAttribute('aria-labelledby', tab.id);
+        panels[index].tabIndex = 0;
+
+        tab.addEventListener('click', () => {
+          selectDay(index);
+        });
+
+        tab.addEventListener('keydown', (event) => {
+          let nextIndex = index;
+
+          switch (event.key) {
+            case 'ArrowRight':
+              nextIndex = (index + 1) % tabs.length;
+              break;
+            case 'ArrowLeft':
+              nextIndex = (index - 1 + tabs.length) % tabs.length;
+              break;
+            case 'Home':
+              nextIndex = 0;
+              break;
+            case 'End':
+              nextIndex = tabs.length - 1;
+              break;
+            default:
+              return;
+          }
+
+          event.preventDefault();
+          selectDay(nextIndex, true);
+        });
+      });
+
+      selectDay(0);
+      tabList.hidden = false;
+      schedule.dataset.ready = 'true';
+    });
+  }
+
+  setupDaySchedules();
+  document.addEventListener('astro:page-load', setupDaySchedules);
+</script>
